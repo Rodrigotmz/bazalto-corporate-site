@@ -1,20 +1,28 @@
 ---
 import siteConfig from '@/config/site.config';
+import { AppWindow, Braces, PanelsTopLeft, ShoppingBag, Workflow, Wrench } from '@lucide/astro';
 
 interface Props {
   detailed?: boolean;
 }
 const { detailed = false } = Astro.props;
+const icons = [PanelsTopLeft, Braces, ShoppingBag, AppWindow, Workflow, Wrench];
 ---
 
 <div class="services-grid">
   {
-    siteConfig.services.map((service) => (
-      <article class="service-item">
-        <h3>{service.title}</h3>
-        <p>{detailed ? service.detail : service.summary}</p>
-      </article>
-    ))
+    siteConfig.services.map((service, index) => {
+      const Icon = icons[index];
+      return (
+        <article class="service-item">
+          <span class="service-icon" aria-hidden="true">
+            <Icon size={24} stroke-width={1.8} aria-hidden="true" />
+          </span>
+          <h3>{service.title}</h3>
+          <p>{detailed ? service.detail : service.summary}</p>
+        </article>
+      );
+    })
   }
 </div>
 
@@ -32,13 +40,16 @@ const { detailed = false } = Astro.props;
     border-bottom: 1px solid var(--divider);
     background: var(--surface-primary);
   }
-  .service-item::before {
-    display: block;
-    width: 2.5rem;
-    height: 4px;
-    margin-bottom: 2.5rem;
-    background: var(--brand-secondary);
-    content: '';
+  .service-icon {
+    display: grid;
+    width: 46px;
+    height: 46px;
+    margin-bottom: 1.75rem;
+    place-items: center;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface-secondary);
+    color: var(--brand-secondary);
   }
   .service-item h3 {
     margin-bottom: 0.8rem;

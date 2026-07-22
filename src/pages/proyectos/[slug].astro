@@ -3,6 +3,7 @@ import { getCollection, render, type CollectionEntry } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ProjectMediaPlaceholder from '@/components/media/ProjectMediaPlaceholder.astro';
 import ContactCTA from '@/components/sections/ContactCTA.astro';
+import { ArrowLeft, CircleDot, CodeXml, ExternalLink, Folder, GitBranch } from '@lucide/astro';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects', ({ data }) => !data.draft);
@@ -21,7 +22,7 @@ const { Content } = await render(project);
   <header class="project-hero">
     <div class="container">
       <a class="back-link" href="/proyectos"
-        ><span aria-hidden="true">←</span> Todos los proyectos</a
+        ><ArrowLeft class="action-icon action-icon--back" size={17} aria-hidden="true" /> Todos los proyectos</a
       >
       <div class="project-title-grid">
         <div>
@@ -31,8 +32,10 @@ const { Content } = await render(project);
         <div class="project-summary">
           <p>{data.summary}</p>
           <dl>
-            <div><dt>Categoría</dt><dd>{data.category}</dd></div><div>
-              <dt>Estado</dt><dd>{data.status}</dd>
+            <div>
+              <dt><Folder size={15} aria-hidden="true" />Categoría</dt><dd>{data.category}</dd>
+            </div><div>
+              <dt><CircleDot size={15} aria-hidden="true" />Estado</dt><dd>{data.status}</dd>
             </div>
           </dl>
         </div>
@@ -47,7 +50,7 @@ const { Content } = await render(project);
   <section class="section project-content">
     <div class="content-grid container">
       <aside>
-        <p class="eyebrow">Tecnologías</p>
+        <p class="eyebrow"><CodeXml size={15} aria-hidden="true" />Tecnologías</p>
         <ul class="tag-list">
           {data.technologies.map((technology) => <li class="tag">{technology}</li>)}
         </ul>
@@ -56,12 +59,12 @@ const { Content } = await render(project);
             <div class="project-links">
               {data.externalUrl && (
                 <a href={data.externalUrl} target="_blank" rel="noopener noreferrer">
-                  Visitar proyecto <span aria-hidden="true">↗</span>
+                  Visitar proyecto <ExternalLink size={15} aria-hidden="true" />
                 </a>
               )}
               {data.repositoryUrl && (
                 <a href={data.repositoryUrl} target="_blank" rel="noopener noreferrer">
-                  Ver repositorio <span aria-hidden="true">↗</span>
+                  Ver repositorio <GitBranch size={15} aria-hidden="true" />
                 </a>
               )}
             </div>
@@ -121,6 +124,9 @@ const { Content } = await render(project);
     font-size: 0.82rem;
   }
   .project-summary dt {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
     color: var(--text-muted);
   }
   .project-summary dd {
@@ -136,6 +142,12 @@ const { Content } = await render(project);
     position: sticky;
     top: 110px;
     height: max-content;
+  }
+  .content-grid aside .eyebrow,
+  .project-links a {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
   }
   .project-links {
     display: grid;

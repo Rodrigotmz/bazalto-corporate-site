@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import siteConfig, { getWhatsAppUrl } from '@/config/site.config';
+import { ExternalLink, MessageSquareOff, MessagesSquare } from '@lucide/astro';
 
 const whatsappUrl = getWhatsAppUrl();
 ---
@@ -21,7 +22,12 @@ const whatsappUrl = getWhatsAppUrl();
   <section class="section">
     <div class="contact-grid container">
       <article class="channel active-channel">
-        <p class="channel-state">Disponible</p>
+        <div class="channel-head">
+          <p class="channel-state">Disponible</p>
+          <span class="channel-icon" aria-hidden="true"
+            ><MessagesSquare size={22} aria-hidden="true" /></span
+          >
+        </div>
         <h2>Facebook</h2>
         <p>
           Escríbenos con una descripción breve del negocio, la necesidad y lo que te gustaría
@@ -31,11 +37,21 @@ const whatsappUrl = getWhatsAppUrl();
           class="button button--primary"
           href={siteConfig.facebook.url}
           target="_blank"
-          rel="noopener noreferrer">Abrir Facebook de BAZALTO <span aria-hidden="true">↗</span></a
+          rel="noopener noreferrer"
+          >Abrir Facebook de BAZALTO <ExternalLink
+            class="action-icon"
+            size={17}
+            aria-hidden="true"
+          /></a
         >
       </article>
       <article class="channel disabled-channel">
-        <p class="channel-state">Próximamente</p>
+        <div class="channel-head">
+          <p class="channel-state">Próximamente</p>
+          <span class="channel-icon" aria-hidden="true"
+            ><MessageSquareOff size={22} aria-hidden="true" /></span
+          >
+        </div>
         <h2>WhatsApp</h2>
         <p>
           Este canal está preparado en la configuración del sitio, pero todavía no cuenta con un
@@ -53,7 +69,7 @@ const whatsappUrl = getWhatsAppUrl();
             </a>
           ) : (
             <span class="disabled-control" aria-disabled="true">
-              WhatsApp próximamente
+              <MessageSquareOff size={17} aria-hidden="true" /> WhatsApp próximamente
             </span>
           )
         }
@@ -91,7 +107,28 @@ const whatsappUrl = getWhatsAppUrl();
   .disabled-channel {
     border-top: 5px solid var(--border-strong);
   }
+  .channel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .channel-icon {
+    display: grid;
+    width: 44px;
+    height: 44px;
+    flex: 0 0 auto;
+    place-items: center;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface-secondary);
+    color: var(--brand-secondary);
+  }
+  .disabled-channel .channel-icon {
+    color: var(--text-muted);
+  }
   .channel-state {
+    margin: 0;
     color: var(--text-muted);
     font-family: var(--font-utility);
     font-size: 0.72rem;
@@ -99,7 +136,7 @@ const whatsappUrl = getWhatsAppUrl();
     text-transform: uppercase;
   }
   .channel h2 {
-    margin: 2.5rem 0 1rem;
+    margin: 2rem 0 1rem;
   }
   .channel > p:not(.channel-state) {
     max-width: 44ch;
@@ -113,6 +150,7 @@ const whatsappUrl = getWhatsAppUrl();
     display: inline-flex;
     min-height: 48px;
     align-items: center;
+    gap: 0.5rem;
     padding: 0.75rem 1.15rem;
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);

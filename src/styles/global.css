@@ -70,6 +70,10 @@ svg {
   max-width: 100%;
 }
 
+.lucide {
+  flex: 0 0 auto;
+}
+
 a {
   color: var(--link);
   text-underline-offset: 0.22em;
@@ -216,6 +220,10 @@ p {
   transform: translateY(-1px);
 }
 
+.button:active {
+  transform: translateY(0);
+}
+
 .button--primary {
   background: var(--button-primary);
   color: var(--text-inverse);
@@ -250,6 +258,25 @@ html[data-theme='dark'] .button--primary:hover {
   align-items: center;
   gap: 0.35rem;
   font-weight: 700;
+}
+
+.action-icon {
+  transition: transform 160ms ease;
+}
+
+.button:hover .action-icon,
+.text-link:hover .action-icon,
+.header-cta:hover .action-icon {
+  transform: translateX(2px);
+}
+
+.button:hover .action-icon--back,
+.back-link:hover .action-icon--back {
+  transform: translateX(-2px);
+}
+
+.button:hover .lucide-external-link {
+  transform: translate(1px, -1px);
 }
 
 .card-grid {

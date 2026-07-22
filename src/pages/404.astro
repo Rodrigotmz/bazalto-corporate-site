@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import { ArrowLeft } from '@lucide/astro';
 ---
 
 <BaseLayout
@@ -15,7 +16,10 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
           Esta ruta no lleva a una página disponible.
         </h1><p class="lead">
           Puede que la dirección haya cambiado o que el enlace no sea correcto.
-        </p><a class="button button--primary" href="/">Volver al inicio</a>
+        </p><a class="button button--primary" href="/"
+          ><ArrowLeft class="action-icon action-icon--back" size={18} aria-hidden="true" /> Volver al
+          inicio</a
+        >
       </div>
     </div>
   </section>

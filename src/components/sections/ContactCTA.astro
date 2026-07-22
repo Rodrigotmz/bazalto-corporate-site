@@ -1,5 +1,6 @@
 ---
 import siteConfig from '@/config/site.config';
+import { ExternalLink, MessageSquareOff } from '@lucide/astro';
 ---
 
 <section class="contact-cta">
@@ -17,12 +18,13 @@ import siteConfig from '@/config/site.config';
         class="button button--primary"
         href={siteConfig.facebook.url}
         target="_blank"
-        rel="noopener noreferrer">Contactar por Facebook <span aria-hidden="true">↗</span></a
+        rel="noopener noreferrer"
+        >Contactar por Facebook <ExternalLink class="action-icon" size={17} aria-hidden="true" /></a
       >
       {
         !siteConfig.whatsapp.enabled && (
           <span class="soon" aria-disabled="true">
-            WhatsApp próximamente
+            <MessageSquareOff size={16} aria-hidden="true" /> WhatsApp próximamente
           </span>
         )
       }
@@ -62,7 +64,9 @@ import siteConfig from '@/config/site.config';
     color: #14202b;
   }
   .soon {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
     margin-top: 1rem;
     color: color-mix(in srgb, var(--text-inverse) 62%, transparent);
     font-size: 0.82rem;

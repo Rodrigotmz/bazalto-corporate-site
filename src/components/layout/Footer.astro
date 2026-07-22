@@ -1,5 +1,6 @@
 ---
 import siteConfig, { getWhatsAppUrl } from '@/config/site.config';
+import { ExternalLink } from '@lucide/astro';
 
 const whatsappUrl = getWhatsAppUrl();
 ---
@@ -23,12 +24,12 @@ const whatsappUrl = getWhatsAppUrl();
     <div class="footer-contact">
       <p class="footer-label">Contacto</p>
       <a href={siteConfig.facebook.url} target="_blank" rel="noopener noreferrer"
-        >Facebook de BAZALTO <span aria-hidden="true">↗</span></a
+        >Facebook de BAZALTO <ExternalLink size={14} aria-hidden="true" /></a
       >
       {
         whatsappUrl ? (
           <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
-            WhatsApp <span aria-hidden="true">↗</span>
+            WhatsApp <ExternalLink size={14} aria-hidden="true" />
           </a>
         ) : (
           <span class="disabled-channel" aria-disabled="true">
@@ -74,6 +75,11 @@ const whatsappUrl = getWhatsAppUrl();
     color: var(--footer-text);
     font-size: 0.9rem;
     text-decoration: none;
+  }
+  .footer-contact a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
   }
   .site-footer a:hover {
     color: #ffffff;

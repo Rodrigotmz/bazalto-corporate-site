@@ -1,5 +1,6 @@
 ---
 import siteConfig from '@/config/site.config';
+import { ArrowRight, Menu, Moon, Sun, X } from '@lucide/astro';
 
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 const isActive = (href: string) =>
@@ -36,18 +37,20 @@ const isActive = (href: string) =>
     </nav>
 
     <div class="header-actions">
-      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Activar tema oscuro">
-        <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"
-          ><circle cx="12" cy="12" r="4"></circle><path
-            d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"
-          ></path></svg
-        >
-        <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"
-          ><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"></path></svg
-        >
+      <button
+        class="theme-toggle"
+        type="button"
+        data-theme-toggle
+        aria-label="Activar tema oscuro"
+        aria-pressed="false"
+      >
+        <Sun class="sun" size={17} stroke-width={1.8} aria-hidden="true" />
+        <Moon class="moon" size={17} stroke-width={1.8} aria-hidden="true" />
         <span class="theme-text">Tema oscuro</span>
       </button>
-      <a class="header-cta" href="/contacto">Cuéntanos tu proyecto</a>
+      <a class="header-cta" href="/contacto"
+        >Cuéntanos tu proyecto <ArrowRight class="action-icon" size={17} aria-hidden="true" /></a
+      >
       <button
         class="menu-trigger"
         type="button"
@@ -56,7 +59,7 @@ const isActive = (href: string) =>
         aria-expanded="false"
         data-menu-open
       >
-        <span></span><span></span><span></span>
+        <Menu size={20} aria-hidden="true" />
       </button>
     </div>
   </div>
@@ -65,7 +68,9 @@ const isActive = (href: string) =>
 <dialog class="mobile-menu" id="mobile-menu" aria-label="Menú principal">
   <div class="mobile-menu-head">
     <span>Menú</span>
-    <button type="button" class="menu-close" data-menu-close aria-label="Cerrar menú">×</button>
+    <button type="button" class="menu-close" data-menu-close aria-label="Cerrar menú">
+      <X size={21} aria-hidden="true" />
+    </button>
   </div>
   <nav aria-label="Navegación móvil">
     {
@@ -77,18 +82,20 @@ const isActive = (href: string) =>
     }
   </nav>
   <div class="mobile-menu-foot">
-    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Activar tema oscuro">
-      <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"
-        ><circle cx="12" cy="12" r="4"></circle><path
-          d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"
-        ></path></svg
-      >
-      <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"
-        ><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"></path></svg
-      >
+    <button
+      class="theme-toggle"
+      type="button"
+      data-theme-toggle
+      aria-label="Activar tema oscuro"
+      aria-pressed="false"
+    >
+      <Sun class="sun" size={17} stroke-width={1.8} aria-hidden="true" />
+      <Moon class="moon" size={17} stroke-width={1.8} aria-hidden="true" />
       <span class="theme-text">Tema oscuro</span>
     </button>
-    <a class="button button--primary" href="/contacto">Cuéntanos tu proyecto</a>
+    <a class="button button--primary" href="/contacto"
+      >Cuéntanos tu proyecto <ArrowRight class="action-icon" size={18} aria-hidden="true" /></a
+    >
   </div>
 </dialog>
 
@@ -98,6 +105,7 @@ const isActive = (href: string) =>
     const dark = root.dataset.theme === 'dark';
     document.querySelectorAll<HTMLElement>('[data-theme-toggle]').forEach((button) => {
       button.setAttribute('aria-label', dark ? 'Activar tema claro' : 'Activar tema oscuro');
+      button.setAttribute('aria-pressed', String(dark));
       const text = button.querySelector('.theme-text');
       if (text) text.textContent = dark ? 'Tema claro' : 'Tema oscuro';
     });
@@ -224,13 +232,12 @@ const isActive = (href: string) =>
     font-size: 0.78rem;
     font-weight: 700;
   }
-  .theme-toggle svg {
-    width: 17px;
-    fill: none;
-    stroke: currentColor;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-width: 1.8;
+  .theme-toggle:hover,
+  .menu-trigger:hover,
+  .menu-close:hover {
+    border-color: var(--border-strong);
+    background: var(--surface-secondary);
+    color: var(--text-primary);
   }
   .moon {
     display: none;
@@ -245,6 +252,7 @@ const isActive = (href: string) =>
     display: inline-flex;
     min-height: 44px;
     align-items: center;
+    gap: 0.4rem;
     padding: 0.55rem 0.85rem;
     border-radius: var(--radius-sm);
     background: var(--button-primary);
@@ -252,6 +260,10 @@ const isActive = (href: string) =>
     font-size: 0.78rem;
     font-weight: 750;
     text-decoration: none;
+  }
+  .header-cta:hover {
+    background: var(--button-primary-hover);
+    color: var(--text-inverse);
   }
   html[data-theme='dark'] .header-cta {
     color: #101820;
@@ -265,13 +277,8 @@ const isActive = (href: string) =>
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
     background: var(--surface-primary);
+    color: var(--text-primary);
     cursor: pointer;
-  }
-  .menu-trigger span {
-    display: block;
-    width: 18px;
-    height: 2px;
-    background: var(--text-primary);
   }
   .mobile-menu {
     width: min(100% - 1.5rem, 420px);
@@ -300,13 +307,15 @@ const isActive = (href: string) =>
     text-transform: uppercase;
   }
   .menu-close {
+    display: grid;
     width: 44px;
     height: 44px;
+    place-items: center;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
     background: transparent;
     color: var(--text-primary);
     cursor: pointer;
-    font-size: 2rem;
-    line-height: 1;
   }
   .mobile-menu nav {
     display: grid;

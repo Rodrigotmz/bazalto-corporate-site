@@ -4,57 +4,93 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import ServiceGrid from '@/components/sections/ServiceGrid.astro';
 import ProjectCard from '@/components/projects/ProjectCard.astro';
 import ContactCTA from '@/components/sections/ContactCTA.astro';
+import {
+  ArrowRight,
+  BadgeCheck,
+  CodeXml,
+  ListChecks,
+  MessagesSquare,
+  MousePointerClick,
+  RefreshCw,
+  Route,
+  Search,
+  Target,
+  TrendingUp,
+  createLucideIcon,
+} from '@lucide/astro';
 
 const projects = await getCollection('projects', ({ data }) => data.featured && !data.draft);
 const featuredProject = projects[0];
+// Preserves the BR3-approved GitBranch geometry after migrating to @lucide/astro.
+const GitBranch = createLucideIcon('GitBranch', [
+  ['line', { x1: '6', x2: '6', y1: '3', y2: '15' }],
+  ['circle', { cx: '18', cy: '6', r: '3' }],
+  ['circle', { cx: '6', cy: '18', r: '3' }],
+  ['path', { d: 'M18 9a9 9 0 0 1-9 9' }],
+]);
 const process = [
-  [
-    '01',
-    'Entendemos la necesidad',
-    'Revisamos el contexto, el problema y las prioridades del negocio.',
-  ],
-  [
-    '02',
-    'Definimos la solución',
-    'Acordamos un alcance claro y las decisiones que realmente aportan valor.',
-  ],
-  [
-    '03',
-    'Diseñamos y desarrollamos',
-    'Construimos la experiencia y la funcionalidad de forma coordinada.',
-  ],
-  [
-    '04',
-    'Probamos y entregamos',
-    'Verificamos el resultado en escenarios reales antes de ponerlo en uso.',
-  ],
-  ['05', 'Damos continuidad', 'Atendemos ajustes y evolución cuando la solución necesita crecer.'],
+  {
+    number: '01',
+    title: 'Entendemos la necesidad',
+    text: 'Revisamos el contexto, el problema y las prioridades del negocio.',
+    icon: Search,
+  },
+  {
+    number: '02',
+    title: 'Definimos la solución',
+    text: 'Acordamos un alcance claro y las decisiones que realmente aportan valor.',
+    icon: ListChecks,
+  },
+  {
+    number: '03',
+    title: 'Diseñamos y desarrollamos',
+    text: 'Construimos la experiencia y la funcionalidad de forma coordinada.',
+    icon: CodeXml,
+  },
+  {
+    number: '04',
+    title: 'Probamos y entregamos',
+    text: 'Verificamos el resultado en escenarios reales antes de ponerlo en uso.',
+    icon: BadgeCheck,
+  },
+  {
+    number: '05',
+    title: 'Damos continuidad',
+    text: 'Atendemos ajustes y evolución cuando la solución necesita crecer.',
+    icon: RefreshCw,
+  },
 ];
 const principles = [
-  [
-    'Soluciones ajustadas al problema',
-    'La tecnología se elige después de entender la necesidad, no al revés.',
-  ],
-  [
-    'Comunicación clara',
-    'Explicamos decisiones, alcances y límites sin convertir el proyecto en una conversación incomprensible.',
-  ],
-  [
-    'Diseño útil',
-    'Cada pantalla y cada interacción deben ayudar a completar una tarea o comprender mejor la información.',
-  ],
-  [
-    'Código mantenible',
-    'Buscamos que la solución pueda corregirse, ampliarse y operar sin complejidad innecesaria.',
-  ],
-  [
-    'Crecimiento progresivo',
-    'El alcance puede avanzar por etapas cuando eso reduce riesgo y permite aprender del uso real.',
-  ],
-  [
-    'Decisiones con propósito',
-    'No añadimos funciones, integraciones o tecnología solo para llenar una lista.',
-  ],
+  {
+    title: 'Soluciones ajustadas al problema',
+    text: 'La tecnología se elige después de entender la necesidad, no al revés.',
+    icon: Target,
+  },
+  {
+    title: 'Comunicación clara',
+    text: 'Explicamos decisiones, alcances y límites sin convertir el proyecto en una conversación incomprensible.',
+    icon: MessagesSquare,
+  },
+  {
+    title: 'Diseño útil',
+    text: 'Cada pantalla y cada interacción deben ayudar a completar una tarea o comprender mejor la información.',
+    icon: MousePointerClick,
+  },
+  {
+    title: 'Código mantenible',
+    text: 'Buscamos que la solución pueda corregirse, ampliarse y operar sin complejidad innecesaria.',
+    icon: GitBranch,
+  },
+  {
+    title: 'Crecimiento progresivo',
+    text: 'El alcance puede avanzar por etapas cuando eso reduce riesgo y permite aprender del uso real.',
+    icon: TrendingUp,
+  },
+  {
+    title: 'Decisiones con propósito',
+    text: 'No añadimos funciones, integraciones o tecnología solo para llenar una lista.',
+    icon: Route,
+  },
 ];
 ---
 
@@ -69,7 +105,9 @@ const principles = [
           resolver necesidades reales.
         </p>
         <div class="button-row">
-          <a class="button button--primary" href="/proyectos">Ver proyectos</a>
+          <a class="button button--primary" href="/proyectos"
+            >Ver proyectos <ArrowRight class="action-icon" size={18} aria-hidden="true" /></a
+          >
           <a class="button button--secondary" href="/servicios">Conocer servicios</a>
         </div>
       </div>
@@ -96,7 +134,11 @@ const principles = [
       <ServiceGrid />
       <p class="section-link">
         <a class="text-link" href="/servicios"
-          >Revisar todos los servicios <span aria-hidden="true">→</span></a
+          >Revisar todos los servicios <ArrowRight
+            class="action-icon"
+            size={17}
+            aria-hidden="true"
+          /></a
         >
       </p>
     </div>
@@ -124,17 +166,16 @@ const principles = [
       </div>
       <ol class="process-list">
         {
-          process.map(([number, title, text]) => (
+          process.map(({ number, title, text, icon: Icon }) => (
             <li>
-              <>
+              <span class="process-marker">
+                <Icon size={20} stroke-width={1.8} aria-hidden="true" />
                 <span>{number}</span>
-                <div>
-                  <>
-                    <h3>{title}</h3>
-                    <p>{text}</p>
-                  </>
-                </div>
-              </>
+              </span>
+              <div>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </div>
             </li>
           ))
         }
@@ -154,12 +195,13 @@ const principles = [
       </div>
       <div class="principles-list">
         {
-          principles.map(([title, text]) => (
+          principles.map(({ title, text, icon: Icon }) => (
             <article>
-              <>
-                <h3>{title}</h3>
-                <p>{text}</p>
-              </>
+              <h3>
+                <Icon size={18} stroke-width={1.8} aria-hidden="true" />
+                {title}
+              </h3>
+              <p>{text}</p>
             </article>
           ))
         }
@@ -177,7 +219,11 @@ const principles = [
           su trabajo, organizar información o convertir un proceso manual en una herramienta útil.
         </p>
         <a class="text-link" href="/nosotros"
-          >Conocer nuestro enfoque <span aria-hidden="true">→</span></a
+          >Conocer nuestro enfoque <ArrowRight
+            class="action-icon"
+            size={17}
+            aria-hidden="true"
+          /></a
         >
       </div>
     </div>
@@ -278,8 +324,13 @@ const principles = [
     padding: 1.6rem 0;
     border-bottom: 1px solid var(--divider);
   }
-  .process-list > li > span {
+  .process-marker {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
     color: var(--brand-secondary);
+  }
+  .process-marker > span {
     font-family: var(--font-utility);
     font-size: 0.75rem;
   }
@@ -313,7 +364,15 @@ const principles = [
     border-bottom: 1px solid var(--divider);
   }
   .principles-list h3 {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
     font-size: 1.2rem;
+  }
+  .principles-list h3 :global(svg) {
+    margin-top: 0.08rem;
+    flex: 0 0 auto;
+    color: var(--brand-secondary);
   }
   .principles-list p {
     margin: 0;
