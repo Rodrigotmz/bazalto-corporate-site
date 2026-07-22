@@ -1,0 +1,178 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import LegalContact from '@/components/legal/LegalContact.astro';
+import LegalIdentity from '@/components/legal/LegalIdentity.astro';
+import legalConfig from '@/config/legal.config';
+import { Content } from '@/content/legal/terminos-y-condiciones.md';
+
+const jurisdiction = legalConfig.jurisdiction;
+const configuredVenue = [jurisdiction.municipality, jurisdiction.state, jurisdiction.country]
+  .filter(Boolean)
+  .join(', ');
+---
+
+<BaseLayout
+  metaTitle="Términos y condiciones | Bazalto"
+  description="Términos de uso del sitio y condiciones generales para la contratación de servicios de Bazalto."
+>
+  <section class="legal-page">
+    <div class="container">
+      <header class="legal-header">
+        <p class="eyebrow">Información legal</p>
+        <h1>Términos y condiciones</h1>
+        <p class="legal-descriptor">Uso del sitio y contratación de servicios</p>
+        <p class="legal-date" data-legal-last-updated>
+          <strong>Última actualización:</strong>
+          {legalConfig.lastUpdated}
+        </p>
+        {
+          legalConfig.effectiveDate && (
+            <p class="legal-date">
+              <strong>Entrada en vigor:</strong> {legalConfig.effectiveDate}
+            </p>
+          )
+        }
+      </header>
+      <article class="legal-document">
+        <LegalIdentity />
+        <Content />
+        <section class="legal-section" data-legal-section>
+          <h2>31. Solución de controversias</h2>
+          <p>
+            Antes de iniciar un procedimiento formal, las partes procurarán resolver cualquier
+            diferencia mediante comunicación directa y negociación de buena fe durante un periodo
+            razonable.
+          </p>
+          <p>
+            Cuando el Cliente tenga el carácter de consumidor, conservará su derecho de acudir ante
+            la Procuraduría Federal del Consumidor y demás autoridades competentes.
+          </p>
+          {
+            jurisdiction.municipality ? (
+              <p>
+                Para las relaciones en las que legalmente proceda pactar jurisdicción, estos
+                Términos se interpretarán conforme a las leyes mexicanas y las partes se someterán a
+                los tribunales competentes de {configuredVenue}, sin afectar derechos o competencias
+                que por ley sean irrenunciables.
+              </p>
+            ) : (
+              <p>
+                Para las relaciones en las que legalmente proceda pactar jurisdicción, estos
+                Términos se interpretarán conforme a las leyes mexicanas y las controversias se
+                someterán a las autoridades y tribunales competentes conforme a la legislación
+                aplicable, sin afectar derechos o competencias que por ley sean irrenunciables.
+              </p>
+            )
+          }
+        </section>
+        <section class="legal-section" data-legal-section>
+          <h2>32. Integridad y divisibilidad</h2>
+          <p>La falta de ejercicio inmediato de un derecho no significará renuncia al mismo.</p>
+          <p>
+            Si alguna cláusula es declarada inválida o inaplicable, deberá interpretarse o limitarse
+            en la medida necesaria, manteniéndose vigentes las demás disposiciones.
+          </p>
+        </section>
+        <LegalContact />
+      </article>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal-page {
+    padding-block: clamp(4rem, 8vw, 7rem);
+  }
+
+  .legal-header,
+  .legal-document {
+    max-width: 820px;
+  }
+
+  .legal-header h1 {
+    max-width: 780px;
+    margin-bottom: 1.5rem;
+    font-size: clamp(2.35rem, 5vw, 4.6rem);
+  }
+
+  .legal-descriptor {
+    margin-bottom: 1.5rem;
+    color: var(--text-secondary);
+    font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  }
+
+  .legal-date {
+    margin: 0.25rem 0 0;
+    color: var(--text-secondary);
+  }
+
+  .legal-date strong {
+    color: var(--text-primary);
+  }
+
+  .legal-document :global(h2) {
+    margin-top: 3.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--divider);
+    font-size: clamp(1.45rem, 2.5vw, 2rem);
+    scroll-margin-top: 100px;
+  }
+
+  .legal-document :global(p),
+  .legal-document :global(li) {
+    color: var(--text-secondary);
+  }
+
+  .legal-document :global(strong) {
+    color: var(--text-primary);
+  }
+
+  .legal-document :global(ul),
+  .legal-document :global(ol) {
+    padding-left: 1.35rem;
+  }
+
+  .legal-document :global(li + li) {
+    margin-top: 0.45rem;
+  }
+
+  .legal-document :global(.legal-facts) {
+    display: grid;
+    gap: 0.45rem;
+    margin: 1.25rem 0;
+  }
+
+  .legal-document :global(.legal-facts div) {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0.5rem;
+  }
+
+  .legal-document :global(.legal-facts dt) {
+    color: var(--text-primary);
+    font-weight: 700;
+  }
+
+  .legal-document :global(.legal-facts dd) {
+    margin: 0;
+    color: var(--text-secondary);
+  }
+
+  .legal-document :global(.legal-external-link) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 700;
+  }
+
+  @media (max-width: 520px) {
+    .legal-header h1 {
+      font-size: clamp(2.15rem, 12vw, 3.2rem);
+    }
+
+    .legal-document :global(.legal-facts div) {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+  }
+</style>

@@ -42,11 +42,15 @@ const isActive = (href: string) =>
         type="button"
         data-theme-toggle
         aria-label="Activar tema oscuro"
-        aria-pressed="false"
+        role="switch"
+        aria-checked="false"
       >
-        <Sun class="sun" size={17} stroke-width={1.8} aria-hidden="true" />
-        <Moon class="moon" size={17} stroke-width={1.8} aria-hidden="true" />
-        <span class="theme-text">Tema oscuro</span>
+        <span class="theme-track" aria-hidden="true">
+          <span class="theme-thumb">
+            <Sun class="sun" size={14} stroke-width={1.8} aria-hidden="true" />
+            <Moon class="moon" size={14} stroke-width={1.8} aria-hidden="true" />
+          </span>
+        </span>
       </button>
       <a class="header-cta" href="/contacto"
         >Cuéntanos tu proyecto <ArrowRight class="action-icon" size={17} aria-hidden="true" /></a
@@ -87,11 +91,15 @@ const isActive = (href: string) =>
       type="button"
       data-theme-toggle
       aria-label="Activar tema oscuro"
-      aria-pressed="false"
+      role="switch"
+      aria-checked="false"
     >
-      <Sun class="sun" size={17} stroke-width={1.8} aria-hidden="true" />
-      <Moon class="moon" size={17} stroke-width={1.8} aria-hidden="true" />
-      <span class="theme-text">Tema oscuro</span>
+      <span class="theme-track" aria-hidden="true">
+        <span class="theme-thumb">
+          <Sun class="sun" size={14} stroke-width={1.8} aria-hidden="true" />
+          <Moon class="moon" size={14} stroke-width={1.8} aria-hidden="true" />
+        </span>
+      </span>
     </button>
     <a class="button button--primary" href="/contacto"
       >Cuéntanos tu proyecto <ArrowRight class="action-icon" size={18} aria-hidden="true" /></a
@@ -105,9 +113,7 @@ const isActive = (href: string) =>
     const dark = root.dataset.theme === 'dark';
     document.querySelectorAll<HTMLElement>('[data-theme-toggle]').forEach((button) => {
       button.setAttribute('aria-label', dark ? 'Activar tema claro' : 'Activar tema oscuro');
-      button.setAttribute('aria-pressed', String(dark));
-      const text = button.querySelector('.theme-text');
-      if (text) text.textContent = dark ? 'Tema claro' : 'Tema oscuro';
+      button.setAttribute('aria-checked', String(dark));
     });
   };
 
@@ -220,19 +226,49 @@ const isActive = (href: string) =>
   }
   .theme-toggle {
     display: inline-flex;
+    width: 56px;
     min-height: 44px;
     align-items: center;
-    gap: 0.45rem;
-    padding: 0.55rem 0.7rem;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    background: var(--surface-primary);
+    justify-content: center;
+    padding: 0;
+    border: 0;
+    background: transparent;
     color: var(--text-secondary);
     cursor: pointer;
-    font-size: 0.78rem;
-    font-weight: 700;
   }
-  .theme-toggle:hover,
+  .theme-track {
+    position: relative;
+    width: 48px;
+    height: 28px;
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    background: var(--surface-secondary);
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease;
+  }
+  .theme-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    display: grid;
+    width: 22px;
+    height: 22px;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--surface-primary);
+    box-shadow: var(--shadow-sm);
+    transition: transform 160ms ease;
+  }
+  .theme-toggle:hover .theme-track {
+    border-color: var(--brand-secondary);
+  }
+  html[data-theme='dark'] .theme-track {
+    background: var(--brand-secondary);
+  }
+  html[data-theme='dark'] .theme-thumb {
+    transform: translateX(20px);
+  }
   .menu-trigger:hover,
   .menu-close:hover {
     border-color: var(--border-strong);
@@ -342,7 +378,6 @@ const isActive = (href: string) =>
     gap: 0.75rem;
     padding: 1rem;
   }
-  .mobile-menu-foot .theme-toggle,
   .mobile-menu-foot .button {
     width: 100%;
   }

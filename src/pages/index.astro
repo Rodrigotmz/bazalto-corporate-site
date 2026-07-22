@@ -1,9 +1,11 @@
 ---
 import { getCollection } from 'astro:content';
+import { Picture } from 'astro:assets';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ServiceGrid from '@/components/sections/ServiceGrid.astro';
 import ProjectCard from '@/components/projects/ProjectCard.astro';
 import ContactCTA from '@/components/sections/ContactCTA.astro';
+import studioCover from '@/assets/brand/bazalto-init.jpg';
 import {
   ArrowRight,
   BadgeCheck,
@@ -111,13 +113,22 @@ const principles = [
           <a class="button button--secondary" href="/servicios">Conocer servicios</a>
         </div>
       </div>
-      <div class="strata" aria-hidden="true">
-        <div class="stratum stratum-one"></div>
-        <div class="stratum stratum-two"></div>
-        <div class="stratum stratum-three"></div>
-        <img src="/bazalto-mark-faithful.svg" alt="" width="2000" height="2000" />
-        <span>Soluciones que toman forma desde una necesidad concreta.</span>
-      </div>
+      <figure class="studio-cover" data-studio-cover>
+        <Picture
+          src={studioCover}
+          formats={['avif', 'webp']}
+          fallbackFormat="jpg"
+          widths={[480, 768, 1024, 1280, 1638]}
+          width={1638}
+          sizes="(max-width: 900px) calc(100vw - 2rem), min(28vw, 380px)"
+          alt="Persona desarrollando software en una computadora portátil junto a una ventana."
+          class="studio-cover-image"
+          pictureAttributes={{ class: 'studio-cover-media' }}
+          loading="eager"
+          decoding="async"
+        />
+        <figcaption>Soluciones que toman forma desde una necesidad concreta.</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -254,53 +265,27 @@ const principles = [
     max-width: 720px;
     margin-bottom: 2rem;
   }
-  .strata {
-    position: relative;
-    min-height: 520px;
+  .studio-cover {
+    margin: 0;
     overflow: hidden;
     border: 1px solid var(--border-strong);
     border-radius: var(--radius-lg);
-    background: #111820;
+    background: var(--footer-background);
     box-shadow: var(--shadow-md);
   }
-  .stratum {
-    position: absolute;
-    right: -20%;
-    left: -20%;
-    transform: rotate(-8deg);
+  .studio-cover :global(.studio-cover-media) {
+    display: block;
+    aspect-ratio: 4 / 5;
   }
-  .stratum-one {
-    top: -10%;
-    height: 43%;
-    background: #173f6b;
+  .studio-cover :global(.studio-cover-image) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 58%;
   }
-  .stratum-two {
-    top: 27%;
-    height: 34%;
-    background: #205b9c;
-    clip-path: polygon(0 18%, 100% 0, 91% 100%, 7% 80%);
-  }
-  .stratum-three {
-    bottom: -15%;
-    height: 53%;
-    background: #242e37;
-    clip-path: polygon(0 0, 100% 18%, 84% 100%, 5% 84%);
-  }
-  .strata img {
-    position: absolute;
-    z-index: 2;
-    top: 50%;
-    left: 50%;
-    width: 42%;
-    transform: translate(-50%, -58%);
-  }
-  .strata span {
-    position: absolute;
-    z-index: 3;
-    right: 1.5rem;
-    bottom: 1.5rem;
-    left: 1.5rem;
-    color: #e7eef5;
+  .studio-cover figcaption {
+    padding: 1rem 1.25rem;
+    color: var(--footer-text);
     font-size: 0.82rem;
     line-height: 1.4;
   }
@@ -394,8 +379,8 @@ const principles = [
     .hero-grid {
       grid-template-columns: 1fr;
     }
-    .strata {
-      min-height: 380px;
+    .studio-cover :global(.studio-cover-media) {
+      aspect-ratio: 16 / 10;
     }
     .principles-grid {
       grid-template-columns: 1fr;
@@ -405,12 +390,6 @@ const principles = [
     }
   }
   @media (max-width: 580px) {
-    .strata {
-      min-height: 310px;
-    }
-    .strata img {
-      width: 45%;
-    }
     .process-list li {
       grid-template-columns: 48px 1fr;
     }

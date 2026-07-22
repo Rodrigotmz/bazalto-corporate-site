@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import ProjectMediaPlaceholder from '@/components/media/ProjectMediaPlaceholder.astro';
+import ProjectMedia from '@/components/media/ProjectMedia.astro';
 import { ArrowRight, CircleDot, Folder } from '@lucide/astro';
 
 interface Props {
@@ -12,7 +12,11 @@ const { data } = project;
 ---
 
 <article class:list={['project-card', { featured }]}>
-  <ProjectMediaPlaceholder label={`Multimedia de ${data.title} pendiente`} />
+  <ProjectMedia
+    src={data.featuredImage}
+    alt={data.featuredImageAlt}
+    fallbackLabel={`Multimedia de ${data.title} pendiente`}
+  />
   <div class="project-body">
     <div class="project-meta">
       <span><CircleDot size={14} aria-hidden="true" />{data.status}</span>

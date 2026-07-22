@@ -12,7 +12,10 @@ export const siteConfig = {
   description: 'Sitios web, sistemas a medida y soluciones digitales para negocios.',
   siteUrl: import.meta.env.PUBLIC_SITE_URL?.replace(/\/$/, '') ?? '',
   navigation,
-  footerNavigation: navigation,
+  footerNavigation: [
+    ...navigation,
+    { label: 'Términos y condiciones', href: '/terminos-y-condiciones' },
+  ],
   services: [
     {
       title: 'Sitios web',

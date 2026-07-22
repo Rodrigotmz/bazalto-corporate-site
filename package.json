@@ -23,7 +23,8 @@
     "@fontsource-variable/manrope": "^5.2.8",
     "@fontsource-variable/outfit": "^5.2.8",
     "@lucide/astro": "^1.25.0",
-    "astro": "7.1.0"
+    "astro": "7.1.0",
+    "sharp": "^0.35.3"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.9",

@@ -1,0 +1,97 @@
+---
+import type { ImageMetadata } from 'astro';
+import { Picture } from 'astro:assets';
+import ProjectMediaPlaceholder from './ProjectMediaPlaceholder.astro';
+
+interface Props {
+  src?: ImageMetadata;
+  alt?: string;
+  caption?: string;
+  variant?: 'card' | 'detail';
+  fallbackLabel: string;
+}
+
+const { src, alt, caption, variant = 'card', fallbackLabel } = Astro.props;
+const sizes =
+  variant === 'card'
+    ? '(max-width: 800px) calc(100vw - 2rem), min(58vw, 680px)'
+    : '(max-width: 800px) calc(100vw - 2rem), 1180px';
+---
+
+{
+  src && alt ? (
+    <figure
+      class:list={['project-media', `project-media--${variant}`]}
+      data-project-media={variant}
+    >
+      <Picture
+        src={src}
+        formats={['avif', 'webp']}
+        widths={[480, 768, 1024, 1440, 1841]}
+        width={1841}
+        sizes={sizes}
+        alt={alt}
+        loading="lazy"
+        decoding="async"
+      />
+      {caption && <figcaption aria-hidden="true">{caption}</figcaption>}
+    </figure>
+  ) : (
+    <ProjectMediaPlaceholder label={fallbackLabel} />
+  )
+}
+
+<style>
+  .project-media {
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-md);
+    background: var(--placeholder-background);
+  }
+
+  .project-media :global(picture) {
+    display: block;
+    height: 100%;
+  }
+
+  .project-media :global(img) {
+    width: 100%;
+    height: 100%;
+  }
+
+  .project-media--card {
+    height: 100%;
+    min-height: 400px;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .project-media--card :global(img) {
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  .project-media--detail :global(picture) {
+    aspect-ratio: 1841 / 940;
+  }
+
+  .project-media--detail :global(img) {
+    object-fit: contain;
+  }
+
+  .project-media figcaption {
+    padding: 0.8rem 1rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.82rem;
+  }
+
+  @media (max-width: 800px) {
+    .project-media--card {
+      min-height: 0;
+      aspect-ratio: 16 / 10;
+    }
+  }
+</style>

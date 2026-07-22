@@ -12,6 +12,10 @@ describe('siteConfig', () => {
       { label: 'Nosotros', href: '/nosotros' },
       { label: 'Contacto', href: '/contacto' },
     ]);
+    expect(siteConfig.footerNavigation.at(-1)).toEqual({
+      label: 'Términos y condiciones',
+      href: '/terminos-y-condiciones',
+    });
   });
 
   it('keeps Facebook active and unconfigured channels disabled', () => {

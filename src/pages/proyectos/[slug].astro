@@ -1,7 +1,8 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { Picture } from 'astro:assets';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import ProjectMediaPlaceholder from '@/components/media/ProjectMediaPlaceholder.astro';
+import ProjectMedia from '@/components/media/ProjectMedia.astro';
 import ContactCTA from '@/components/sections/ContactCTA.astro';
 import { ArrowLeft, CircleDot, CodeXml, ExternalLink, Folder, GitBranch } from '@lucide/astro';
 
@@ -44,7 +45,13 @@ const { Content } = await render(project);
   </header>
   <section class="section--compact">
     <div class="container">
-      <ProjectMediaPlaceholder label={`Multimedia de ${data.title} pendiente`} />
+      <ProjectMedia
+        src={data.featuredImage}
+        alt={data.featuredImageAlt}
+        caption={data.featuredImageAlt}
+        variant="detail"
+        fallbackLabel={`Multimedia de ${data.title} pendiente`}
+      />
     </div>
   </section>
   <section class="section project-content">
@@ -54,6 +61,25 @@ const { Content } = await render(project);
         <ul class="tag-list">
           {data.technologies.map((technology) => <li class="tag">{technology}</li>)}
         </ul>
+        {
+          data.logo && data.logoAlt && (
+            <div class="project-identity">
+              <p class="eyebrow">Identidad del proyecto</p>
+              <figure>
+                <Picture
+                  src={data.logo}
+                  formats={['avif', 'webp']}
+                  widths={[160, 240, 320, 400]}
+                  width={400}
+                  sizes="(max-width: 760px) 220px, 190px"
+                  alt={data.logoAlt}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+            </div>
+          )
+        }
         {
           (data.externalUrl || data.repositoryUrl) && (
             <div class="project-links">
@@ -153,6 +179,28 @@ const { Content } = await render(project);
     display: grid;
     gap: 0.5rem;
     margin-top: 1.5rem;
+  }
+  .project-identity {
+    margin-top: 2rem;
+  }
+  .project-identity figure {
+    width: min(100%, 220px);
+    margin: 0;
+    padding: 0.55rem;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--project-identity-background);
+  }
+  .project-identity :global(picture),
+  .project-identity :global(img) {
+    display: block;
+    width: 100%;
+  }
+  .project-identity :global(img) {
+    aspect-ratio: 1;
+    height: auto;
+    object-fit: contain;
   }
   .details {
     display: grid;

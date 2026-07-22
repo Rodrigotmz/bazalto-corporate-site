@@ -47,8 +47,9 @@ el sitio.
 
 ## Medios
 
-Hasta recibir capturas reales del propietario, todas las áreas de proyecto usan el componente
-reutilizable con `?`. No se emplean imágenes remotas ni contenido generado.
+Los originales de cada proyecto viven en `src/assets/projects/<slug>/`; Astro genera sus variantes
+responsivas y el componente reutilizable con `?` permanece como fallback. No se emplean imágenes
+remotas ni contenido generado.
 
 ## Despliegue
 

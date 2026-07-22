@@ -1,0 +1,33 @@
+---
+import legalConfig from '@/config/legal.config';
+
+const identityFields = [
+  { label: 'Nombre comercial', value: legalConfig.tradeName },
+  { label: 'Marca', value: legalConfig.brandPresentation },
+  { label: 'Nombre legal', value: legalConfig.legalName },
+  { label: 'RFC', value: legalConfig.taxId },
+  { label: 'Domicilio comercial o fiscal', value: legalConfig.address },
+  { label: 'Correo electrónico', value: legalConfig.email },
+  { label: 'Teléfono', value: legalConfig.phone },
+  { label: 'Sitio web', value: legalConfig.siteUrl },
+].filter(({ value }) => value.trim());
+---
+
+<section class="legal-section" data-legal-section>
+  <h2>1. Identidad del prestador</h2>
+  <p>El presente sitio web y sus servicios se identifican mediante los siguientes datos:</p>
+  <dl class="legal-facts">
+    {
+      identityFields.map(({ label, value }) => (
+        <div>
+          <dt>{label}</dt>
+          <dd>{value}</dd>
+        </div>
+      ))
+    }
+  </dl>
+  <p>
+    En estos Términos y Condiciones, a Bazalto se le denominará indistintamente
+    <strong>“Bazalto”</strong> o <strong>“el Prestador”</strong>.
+  </p>
+</section>

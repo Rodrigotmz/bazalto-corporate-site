@@ -1,0 +1,46 @@
+---
+import legalConfig from '@/config/legal.config';
+import { ExternalLink } from '@lucide/astro';
+
+const contactFields = [
+  { label: 'Correo electrónico', value: legalConfig.email },
+  { label: 'Teléfono', value: legalConfig.phone },
+  { label: 'Domicilio', value: legalConfig.address },
+  { label: 'Horario de atención', value: legalConfig.businessHours },
+].filter(({ value }) => value.trim());
+---
+
+<section class="legal-section" data-legal-section>
+  <h2>33. Contacto</h2>
+  <p>
+    Para aclaraciones, solicitudes, quejas o asuntos relacionados con estos Términos y Condiciones,
+    podrá contactarse a Bazalto mediante los canales confirmados:
+  </p>
+  {
+    legalConfig.facebook.enabled && legalConfig.facebook.url && (
+      <p>
+        <a
+          class="legal-external-link"
+          href={legalConfig.facebook.url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {legalConfig.facebook.label}
+          <ExternalLink size={15} aria-hidden="true" />
+        </a>
+      </p>
+    )
+  }
+  {
+    contactFields.length > 0 && (
+      <dl class="legal-facts">
+        {contactFields.map(({ label, value }) => (
+          <div>
+            <dt>{label}</dt>
+            <dd>{value}</dd>
+          </div>
+        ))}
+      </dl>
+    )
+  }
+</section>
