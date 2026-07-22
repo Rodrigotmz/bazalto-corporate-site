@@ -1,0 +1,37 @@
+---
+interface Props {
+  label?: string;
+  ratio?: 'wide' | 'standard';
+}
+const { label = 'Multimedia del proyecto pendiente', ratio = 'wide' } = Astro.props;
+---
+
+<div class:list={['media-placeholder', ratio]} role="img" aria-label={label}>
+  <span aria-hidden="true">?</span>
+  <span class="sr-only">{label}</span>
+</div>
+
+<style>
+  .media-placeholder {
+    display: grid;
+    width: 100%;
+    place-items: center;
+    overflow: hidden;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-md);
+    background: var(--placeholder-background);
+    color: var(--placeholder-text);
+  }
+  .wide {
+    aspect-ratio: 16 / 9;
+  }
+  .standard {
+    aspect-ratio: 4 / 3;
+  }
+  .media-placeholder span[aria-hidden='true'] {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 450;
+    line-height: 1;
+  }
+</style>

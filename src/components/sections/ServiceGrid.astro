@@ -1,0 +1,63 @@
+---
+import siteConfig from '@/config/site.config';
+
+interface Props {
+  detailed?: boolean;
+}
+const { detailed = false } = Astro.props;
+---
+
+<div class="services-grid">
+  {
+    siteConfig.services.map((service) => (
+      <article class="service-item">
+        <h3>{service.title}</h3>
+        <p>{detailed ? service.detail : service.summary}</p>
+      </article>
+    ))
+  }
+</div>
+
+<style>
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--divider);
+    border-left: 1px solid var(--divider);
+  }
+  .service-item {
+    min-height: 230px;
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    border-right: 1px solid var(--divider);
+    border-bottom: 1px solid var(--divider);
+    background: var(--surface-primary);
+  }
+  .service-item::before {
+    display: block;
+    width: 2.5rem;
+    height: 4px;
+    margin-bottom: 2.5rem;
+    background: var(--brand-secondary);
+    content: '';
+  }
+  .service-item h3 {
+    margin-bottom: 0.8rem;
+  }
+  .service-item p {
+    margin: 0;
+    color: var(--text-secondary);
+  }
+  @media (max-width: 900px) {
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 580px) {
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+    .service-item {
+      min-height: 0;
+    }
+  }
+</style>

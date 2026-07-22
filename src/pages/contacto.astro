@@ -1,0 +1,145 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import siteConfig, { getWhatsAppUrl } from '@/config/site.config';
+
+const whatsappUrl = getWhatsAppUrl();
+---
+
+<BaseLayout
+  title="Contacto"
+  description="Contacta a BAZALTO por Facebook para conversar sobre un sitio web, sistema o solución digital."
+>
+  <header class="page-hero">
+    <div class="section-heading container">
+      <p class="eyebrow">Contacto</p>
+      <h1>Cuéntanos qué necesitas resolver.</h1>
+      <p class="lead">
+        Por ahora, Facebook es el canal disponible para comenzar una conversación sobre tu proyecto.
+      </p>
+    </div>
+  </header>
+  <section class="section">
+    <div class="contact-grid container">
+      <article class="channel active-channel">
+        <p class="channel-state">Disponible</p>
+        <h2>Facebook</h2>
+        <p>
+          Escríbenos con una descripción breve del negocio, la necesidad y lo que te gustaría
+          lograr.
+        </p>
+        <a
+          class="button button--primary"
+          href={siteConfig.facebook.url}
+          target="_blank"
+          rel="noopener noreferrer">Abrir Facebook de BAZALTO <span aria-hidden="true">↗</span></a
+        >
+      </article>
+      <article class="channel disabled-channel">
+        <p class="channel-state">Próximamente</p>
+        <h2>WhatsApp</h2>
+        <p>
+          Este canal está preparado en la configuración del sitio, pero todavía no cuenta con un
+          número habilitado.
+        </p>
+        {
+          whatsappUrl ? (
+            <a
+              class="button button--secondary"
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Abrir WhatsApp
+            </a>
+          ) : (
+            <span class="disabled-control" aria-disabled="true">
+              WhatsApp próximamente
+            </span>
+          )
+        }
+      </article>
+    </div>
+  </section>
+  <section class="section--compact surface-section">
+    <div class="note-grid container">
+      <h2>Antes de escribir</h2>
+      <p>
+        No hace falta preparar documentación técnica. Conocer el problema, quién utilizará la
+        solución y qué información existe es suficiente para iniciar. Más canales de contacto podrán
+        habilitarse después.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  .channel {
+    min-height: 390px;
+    padding: clamp(1.75rem, 4vw, 3rem);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    background: var(--card-background);
+  }
+  .active-channel {
+    border-top: 5px solid var(--brand-secondary);
+  }
+  .disabled-channel {
+    border-top: 5px solid var(--border-strong);
+  }
+  .channel-state {
+    color: var(--text-muted);
+    font-family: var(--font-utility);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .channel h2 {
+    margin: 2.5rem 0 1rem;
+  }
+  .channel > p:not(.channel-state) {
+    max-width: 44ch;
+    color: var(--text-secondary);
+  }
+  .channel .button,
+  .disabled-control {
+    margin-top: 2rem;
+  }
+  .disabled-control {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    padding: 0.75rem 1.15rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    font-weight: 700;
+  }
+  .note-grid {
+    display: grid;
+    grid-template-columns: 0.7fr 1.3fr;
+    gap: 2rem;
+  }
+  .note-grid h2,
+  .note-grid p {
+    margin: 0;
+  }
+  .note-grid p {
+    max-width: 680px;
+    color: var(--text-secondary);
+  }
+  @media (max-width: 700px) {
+    .contact-grid,
+    .note-grid {
+      grid-template-columns: 1fr;
+    }
+    .channel {
+      min-height: 0;
+    }
+  }
+</style>

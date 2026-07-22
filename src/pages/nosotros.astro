@@ -1,0 +1,125 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ContactCTA from '@/components/sections/ContactCTA.astro';
+---
+
+<BaseLayout
+  title="Nosotros"
+  description="Conoce el enfoque práctico de BAZALTO para diseñar y desarrollar soluciones digitales útiles y mantenibles."
+>
+  <header class="page-hero">
+    <div class="section-heading container">
+      <p class="eyebrow">Nosotros</p>
+      <h1>Lo digital debe resolver algo concreto.</h1>
+      <p class="lead">
+        BAZALTO es una marca de software y soluciones digitales enfocada en crear herramientas
+        claras para necesidades reales de negocio.
+      </p>
+    </div>
+  </header>
+  <section class="section">
+    <div class="story-grid container">
+      <div class="story-index"><span>Enfoque</span><span>BAZALTO</span></div>
+      <div class="prose">
+        <h2>Qué hacemos</h2>
+        <p>
+          Diseñamos y desarrollamos sitios, sistemas, catálogos y aplicaciones web. Atendemos tanto
+          la forma en que un negocio presenta su trabajo como las herramientas que utiliza para
+          organizar su operación.
+        </p>
+        <h2>Qué problemas atendemos</h2>
+        <p>
+          Información difícil de consultar, procesos manuales, tareas repetidas, herramientas que ya
+          no responden bien o una presencia digital que no explica con claridad el negocio.
+        </p>
+        <h2>Cómo evaluamos un proyecto</h2>
+        <p>
+          Primero entendemos qué sucede hoy, quién participa y qué resultado hace falta. Después
+          delimitamos el alcance y elegimos una solución proporcional al problema.
+        </p>
+        <h2>Qué buscamos en el resultado</h2>
+        <p>
+          Que la herramienta sea útil desde el primer uso, comprensible para las personas que
+          dependen de ella y mantenible cuando necesite corregirse o crecer.
+        </p>
+      </div>
+    </div>
+  </section>
+  <section class="section surface-section">
+    <div class="approach-grid container">
+      <div><p class="eyebrow">Criterios de trabajo</p><h2>Claridad en cada etapa.</h2></div>
+      <ul>
+        <li>
+          <strong>Entender antes de proponer.</strong><span
+            >La solución no se decide sin conocer la operación.</span
+          >
+        </li>
+        <li>
+          <strong>Priorizar lo necesario.</strong><span
+            >El alcance parte de lo que debe funcionar, no de una lista inflada.</span
+          >
+        </li>
+        <li>
+          <strong>Diseñar para el uso real.</strong><span
+            >Las decisiones visuales acompañan las tareas y la información.</span
+          >
+        </li>
+        <li>
+          <strong>Preparar la continuidad.</strong><span
+            >Una solución útil también debe poder mantenerse y evolucionar.</span
+          >
+        </li>
+      </ul>
+    </div>
+  </section>
+  <ContactCTA />
+</BaseLayout>
+
+<style>
+  .story-grid {
+    display: grid;
+    grid-template-columns: 0.45fr 1.55fr;
+    gap: clamp(2rem, 8vw, 8rem);
+  }
+  .story-index {
+    display: flex;
+    height: max-content;
+    justify-content: space-between;
+    padding-top: 0.7rem;
+    border-top: 3px solid var(--brand-secondary);
+    color: var(--text-muted);
+    font-family: var(--font-utility);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .prose h2:first-child {
+    margin-top: 0;
+  }
+  .approach-grid {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: clamp(3rem, 8vw, 7rem);
+  }
+  .approach-grid ul {
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--divider);
+    list-style: none;
+  }
+  .approach-grid li {
+    display: grid;
+    gap: 0.35rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--divider);
+  }
+  .approach-grid span {
+    color: var(--text-secondary);
+  }
+  @media (max-width: 720px) {
+    .story-grid,
+    .approach-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

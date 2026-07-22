@@ -1,0 +1,191 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ProjectMediaPlaceholder from '@/components/media/ProjectMediaPlaceholder.astro';
+import ContactCTA from '@/components/sections/ContactCTA.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects', ({ data }) => !data.draft);
+  return projects.map((project) => ({ params: { slug: project.data.slug }, props: { project } }));
+}
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+const { project } = Astro.props;
+const { data } = project;
+const { Content } = await render(project);
+---
+
+<BaseLayout title={data.title} description={data.summary}>
+  <header class="project-hero">
+    <div class="container">
+      <a class="back-link" href="/proyectos"
+        ><span aria-hidden="true">←</span> Todos los proyectos</a
+      >
+      <div class="project-title-grid">
+        <div>
+          <p class="eyebrow">{data.status}</p>
+          <h1>{data.title}</h1>
+        </div>
+        <div class="project-summary">
+          <p>{data.summary}</p>
+          <dl>
+            <div><dt>Categoría</dt><dd>{data.category}</dd></div><div>
+              <dt>Estado</dt><dd>{data.status}</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </header>
+  <section class="section--compact">
+    <div class="container">
+      <ProjectMediaPlaceholder label={`Multimedia de ${data.title} pendiente`} />
+    </div>
+  </section>
+  <section class="section project-content">
+    <div class="content-grid container">
+      <aside>
+        <p class="eyebrow">Tecnologías</p>
+        <ul class="tag-list">
+          {data.technologies.map((technology) => <li class="tag">{technology}</li>)}
+        </ul>
+        {
+          (data.externalUrl || data.repositoryUrl) && (
+            <div class="project-links">
+              {data.externalUrl && (
+                <a href={data.externalUrl} target="_blank" rel="noopener noreferrer">
+                  Visitar proyecto <span aria-hidden="true">↗</span>
+                </a>
+              )}
+              {data.repositoryUrl && (
+                <a href={data.repositoryUrl} target="_blank" rel="noopener noreferrer">
+                  Ver repositorio <span aria-hidden="true">↗</span>
+                </a>
+              )}
+            </div>
+          )
+        }
+      </aside>
+      <div class="details">
+        <section>
+          <p class="eyebrow">Descripción general</p><div class="prose"><Content /></div>
+        </section>
+        <section><p class="eyebrow">El reto</p><h2>{data.challenge}</h2></section>
+        <section><p class="eyebrow">La solución</p><h2>{data.solution}</h2></section>
+        <section>
+          <p class="eyebrow">Funciones principales</p><ul class="features">
+            {data.features.map((feature) => <li>{feature}</li>)}
+          </ul>
+        </section>
+      </div>
+    </div>
+  </section>
+  <ContactCTA />
+</BaseLayout>
+
+<style>
+  .project-hero {
+    padding-block: 2rem clamp(3rem, 7vw, 6rem);
+    border-bottom: 1px solid var(--border);
+  }
+  .back-link {
+    display: inline-flex;
+    gap: 0.45rem;
+    margin-bottom: clamp(3rem, 7vw, 6rem);
+    font-weight: 700;
+  }
+  .project-title-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    align-items: end;
+    gap: clamp(2rem, 8vw, 7rem);
+  }
+  .project-title-grid h1 {
+    margin: 0;
+  }
+  .project-summary > p {
+    color: var(--text-secondary);
+    font-size: 1.15rem;
+  }
+  .project-summary dl {
+    margin: 2rem 0 0;
+    border-top: 1px solid var(--divider);
+  }
+  .project-summary dl div {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid var(--divider);
+    font-size: 0.82rem;
+  }
+  .project-summary dt {
+    color: var(--text-muted);
+  }
+  .project-summary dd {
+    margin: 0;
+    text-align: right;
+  }
+  .content-grid {
+    display: grid;
+    grid-template-columns: 0.4fr 1.6fr;
+    gap: clamp(3rem, 8vw, 8rem);
+  }
+  .content-grid aside {
+    position: sticky;
+    top: 110px;
+    height: max-content;
+  }
+  .project-links {
+    display: grid;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+  .details {
+    display: grid;
+    gap: clamp(3.5rem, 7vw, 6rem);
+  }
+  .details section {
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+    border-bottom: 1px solid var(--divider);
+  }
+  .details section:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+  .details h2 {
+    max-width: 820px;
+    font-size: clamp(1.8rem, 3.5vw, 3rem);
+    line-height: 1.2;
+  }
+  .features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--divider);
+    border-left: 1px solid var(--divider);
+    list-style: none;
+  }
+  .features li {
+    padding: 1.25rem;
+    border-right: 1px solid var(--divider);
+    border-bottom: 1px solid var(--divider);
+    color: var(--text-secondary);
+  }
+  @media (max-width: 760px) {
+    .project-title-grid,
+    .content-grid {
+      grid-template-columns: 1fr;
+    }
+    .content-grid aside {
+      position: static;
+    }
+  }
+  @media (max-width: 520px) {
+    .features {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

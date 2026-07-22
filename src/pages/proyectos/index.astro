@@ -1,0 +1,66 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ProjectCard from '@/components/projects/ProjectCard.astro';
+import siteConfig from '@/config/site.config';
+
+const projects = (await getCollection('projects', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf()
+);
+---
+
+<BaseLayout
+  title="Proyectos"
+  description="Proyectos de sitios, sistemas y soluciones digitales desarrollados por BAZALTO."
+>
+  <header class="page-hero">
+    <div class="section-heading container">
+      <p class="eyebrow">Proyectos</p>
+      <h1>Casos que explican el problema y la solución.</h1>
+      <p class="lead">
+        Presentamos el contexto, las decisiones y las funciones de cada proyecto sin resultados
+        inventados ni promesas fuera de su alcance.
+      </p>
+    </div>
+  </header>
+  <section class="section">
+    <div class="projects-list container">
+      {projects.map((project) => <ProjectCard project={project} />)}
+      <aside class="future-state" aria-label="Próximos proyectos">
+        <span aria-hidden="true">+</span>
+        <div><h2>Archivo en crecimiento</h2><p>{siteConfig.projectLabels.future}</p></div>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .projects-list {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .future-state {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 1.5rem;
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+    border: 1px dashed var(--border-strong);
+    border-radius: var(--radius-md);
+    background: var(--surface-secondary);
+  }
+  .future-state > span {
+    color: var(--brand-secondary);
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 300;
+  }
+  .future-state h2 {
+    margin: 0 0 0.25rem;
+    font-size: 1.4rem;
+  }
+  .future-state p {
+    margin: 0;
+    color: var(--text-secondary);
+  }
+</style>

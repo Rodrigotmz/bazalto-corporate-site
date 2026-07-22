@@ -1,0 +1,118 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ServiceGrid from '@/components/sections/ServiceGrid.astro';
+import ContactCTA from '@/components/sections/ContactCTA.astro';
+---
+
+<BaseLayout
+  title="Servicios"
+  description="Sitios web, sistemas a medida, catálogos, aplicaciones y mantenimiento de soluciones digitales para negocios."
+>
+  <header class="page-hero">
+    <div class="section-heading container">
+      <p class="eyebrow">Servicios</p>
+      <h1>Soluciones digitales definidas desde el problema.</h1>
+      <p class="lead">
+        Cada proyecto parte de una necesidad concreta. El alcance, las funciones y la tecnología se
+        deciden después de entenderla.
+      </p>
+    </div>
+  </header>
+  <section class="section">
+    <div class="container"><ServiceGrid detailed /></div>
+  </section>
+  <section class="section surface-section">
+    <div class="start-grid container">
+      <div>
+        <p class="eyebrow">Para comenzar</p>
+        <h2>Primero necesitamos contexto, no una especificación técnica.</h2>
+      </div>
+      <div class="start-list">
+        <article>
+          <h3>La necesidad</h3><p>Qué tarea, problema u oportunidad necesita atender el negocio.</p>
+        </article>
+        <article>
+          <h3>Las personas</h3><p>Quién usará la solución y qué necesita hacer con ella.</p>
+        </article>
+        <article>
+          <h3>La información</h3><p>
+            Qué datos, productos o contenido ya existen y cómo se administran hoy.
+          </p>
+        </article>
+        <article>
+          <h3>Las prioridades</h3><p>
+            Qué resultado es indispensable y qué puede incorporarse en otra etapa.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+  <section class="section--compact scope-band">
+    <div class="scope-grid container">
+      <h2>El alcance se define en conjunto.</h2>
+      <div>
+        <p>
+          No publicamos precios ni plazos genéricos porque dependen del problema, el contenido, las
+          integraciones y la operación de cada proyecto.
+        </p><a class="text-link" href="/proyectos"
+          >Ver proyectos <span aria-hidden="true">→</span></a
+        >
+      </div>
+    </div>
+  </section>
+  <ContactCTA />
+</BaseLayout>
+
+<style>
+  .start-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: clamp(3rem, 8vw, 7rem);
+  }
+  .start-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    border-top: 1px solid var(--divider);
+    border-left: 1px solid var(--divider);
+  }
+  .start-list article {
+    padding: 1.5rem;
+    border-right: 1px solid var(--divider);
+    border-bottom: 1px solid var(--divider);
+    background: var(--surface-primary);
+  }
+  .start-list h3 {
+    font-size: 1.2rem;
+  }
+  .start-list p,
+  .scope-grid p {
+    margin: 0;
+    color: var(--text-secondary);
+  }
+  .scope-band {
+    background: var(--surface-primary);
+  }
+  .scope-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    gap: 3rem;
+  }
+  .scope-grid h2 {
+    margin: 0;
+  }
+  .scope-grid p {
+    margin-bottom: 1rem;
+  }
+  @media (max-width: 760px) {
+    .start-grid,
+    .scope-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 520px) {
+    .start-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

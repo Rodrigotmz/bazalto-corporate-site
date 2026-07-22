@@ -1,9 +1,366 @@
 ---
-import HomeView from '@/components/pages/views/HomeView.astro';
-import { defaultLocale } from '@/i18n';
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ServiceGrid from '@/components/sections/ServiceGrid.astro';
+import ProjectCard from '@/components/projects/ProjectCard.astro';
+import ContactCTA from '@/components/sections/ContactCTA.astro';
 
-// The landing page for the default locale. Additional locales are served by
-// `src/pages/[locale]/index.astro`, which renders the same view.
+const projects = await getCollection('projects', ({ data }) => data.featured && !data.draft);
+const featuredProject = projects[0];
+const process = [
+  [
+    '01',
+    'Entendemos la necesidad',
+    'Revisamos el contexto, el problema y las prioridades del negocio.',
+  ],
+  [
+    '02',
+    'Definimos la solución',
+    'Acordamos un alcance claro y las decisiones que realmente aportan valor.',
+  ],
+  [
+    '03',
+    'Diseñamos y desarrollamos',
+    'Construimos la experiencia y la funcionalidad de forma coordinada.',
+  ],
+  [
+    '04',
+    'Probamos y entregamos',
+    'Verificamos el resultado en escenarios reales antes de ponerlo en uso.',
+  ],
+  ['05', 'Damos continuidad', 'Atendemos ajustes y evolución cuando la solución necesita crecer.'],
+];
+const principles = [
+  [
+    'Soluciones ajustadas al problema',
+    'La tecnología se elige después de entender la necesidad, no al revés.',
+  ],
+  [
+    'Comunicación clara',
+    'Explicamos decisiones, alcances y límites sin convertir el proyecto en una conversación incomprensible.',
+  ],
+  [
+    'Diseño útil',
+    'Cada pantalla y cada interacción deben ayudar a completar una tarea o comprender mejor la información.',
+  ],
+  [
+    'Código mantenible',
+    'Buscamos que la solución pueda corregirse, ampliarse y operar sin complejidad innecesaria.',
+  ],
+  [
+    'Crecimiento progresivo',
+    'El alcance puede avanzar por etapas cuando eso reduce riesgo y permite aprender del uso real.',
+  ],
+  [
+    'Decisiones con propósito',
+    'No añadimos funciones, integraciones o tecnología solo para llenar una lista.',
+  ],
+];
 ---
 
-<HomeView locale={defaultLocale} />
+<BaseLayout>
+  <section class="home-hero">
+    <div class="hero-grid container">
+      <div class="hero-copy">
+        <p class="eyebrow">BAZALTO · Software y soluciones digitales</p>
+        <h1>Software y soluciones digitales para negocios que quieren avanzar.</h1>
+        <p class="lead">
+          Creamos sitios web, sistemas a medida, catálogos y herramientas digitales pensadas para
+          resolver necesidades reales.
+        </p>
+        <div class="button-row">
+          <a class="button button--primary" href="/proyectos">Ver proyectos</a>
+          <a class="button button--secondary" href="/servicios">Conocer servicios</a>
+        </div>
+      </div>
+      <div class="strata" aria-hidden="true">
+        <div class="stratum stratum-one"></div>
+        <div class="stratum stratum-two"></div>
+        <div class="stratum stratum-three"></div>
+        <img src="/bazalto-mark-faithful.svg" alt="" width="2000" height="2000" />
+        <span>Soluciones que toman forma desde una necesidad concreta.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section surface-section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Servicios</p>
+        <h2>Herramientas digitales con un trabajo claro que cumplir.</h2>
+        <p class="lead">
+          Desde una presencia profesional en línea hasta un sistema que organiza una operación
+          específica.
+        </p>
+      </div>
+      <ServiceGrid />
+      <p class="section-link">
+        <a class="text-link" href="/servicios"
+          >Revisar todos los servicios <span aria-hidden="true">→</span></a
+        >
+      </p>
+    </div>
+  </section>
+
+  {
+    featuredProject && (
+      <section class="section">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow">Proyecto destacado</p>
+            <h2>Una solución construida alrededor de la operación.</h2>
+          </div>
+          <ProjectCard project={featuredProject} featured />
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section process-section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Forma de trabajo</p>
+        <h2>Un proceso breve, visible y orientado a decisiones.</h2>
+      </div>
+      <ol class="process-list">
+        {
+          process.map(([number, title, text]) => (
+            <li>
+              <>
+                <span>{number}</span>
+                <div>
+                  <>
+                    <h3>{title}</h3>
+                    <p>{text}</p>
+                  </>
+                </div>
+              </>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section surface-section">
+    <div class="principles-grid container">
+      <div class="principles-intro">
+        <p class="eyebrow">Por qué BAZALTO</p>
+        <h2>Buenas decisiones antes que complejidad.</h2>
+        <p class="lead">
+          Trabajamos cada proyecto para que lo técnico se traduzca en una solución comprensible y
+          sostenible.
+        </p>
+      </div>
+      <div class="principles-list">
+        {
+          principles.map(([title, text]) => (
+            <article>
+              <>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section about-preview">
+    <div class="about-grid container">
+      <p class="eyebrow">Acerca de BAZALTO</p>
+      <div>
+        <h2>Diseño y desarrollo para necesidades concretas.</h2>
+        <p class="lead">
+          En BAZALTO desarrollamos productos digitales para negocios que necesitan presentar mejor
+          su trabajo, organizar información o convertir un proceso manual en una herramienta útil.
+        </p>
+        <a class="text-link" href="/nosotros"
+          >Conocer nuestro enfoque <span aria-hidden="true">→</span></a
+        >
+      </div>
+    </div>
+  </section>
+
+  <ContactCTA />
+</BaseLayout>
+
+<style>
+  .home-hero {
+    min-height: calc(100svh - 78px);
+    display: grid;
+    align-items: center;
+    padding-block: clamp(3.5rem, 7vw, 6.5rem);
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(360px, 0.75fr);
+    align-items: center;
+    gap: clamp(2.5rem, 7vw, 7rem);
+  }
+  .hero-copy h1 {
+    max-width: 900px;
+    margin-bottom: 1.5rem;
+  }
+  .hero-copy .lead {
+    max-width: 720px;
+    margin-bottom: 2rem;
+  }
+  .strata {
+    position: relative;
+    min-height: 520px;
+    overflow: hidden;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-lg);
+    background: #111820;
+    box-shadow: var(--shadow-md);
+  }
+  .stratum {
+    position: absolute;
+    right: -20%;
+    left: -20%;
+    transform: rotate(-8deg);
+  }
+  .stratum-one {
+    top: -10%;
+    height: 43%;
+    background: #173f6b;
+  }
+  .stratum-two {
+    top: 27%;
+    height: 34%;
+    background: #205b9c;
+    clip-path: polygon(0 18%, 100% 0, 91% 100%, 7% 80%);
+  }
+  .stratum-three {
+    bottom: -15%;
+    height: 53%;
+    background: #242e37;
+    clip-path: polygon(0 0, 100% 18%, 84% 100%, 5% 84%);
+  }
+  .strata img {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    width: 42%;
+    transform: translate(-50%, -58%);
+  }
+  .strata span {
+    position: absolute;
+    z-index: 3;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    color: #e7eef5;
+    font-size: 0.82rem;
+    line-height: 1.4;
+  }
+  .section-link {
+    margin: 2rem 0 0;
+  }
+  .process-section {
+    background: var(--surface-primary);
+  }
+  .process-list {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--divider);
+    list-style: none;
+  }
+  .process-list li {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 1rem;
+    padding: 1.6rem 0;
+    border-bottom: 1px solid var(--divider);
+  }
+  .process-list > li > span {
+    color: var(--brand-secondary);
+    font-family: var(--font-utility);
+    font-size: 0.75rem;
+  }
+  .process-list h3 {
+    margin-bottom: 0.4rem;
+  }
+  .process-list p {
+    max-width: 680px;
+    margin: 0;
+    color: var(--text-secondary);
+  }
+  .principles-grid {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: clamp(3rem, 8vw, 7rem);
+  }
+  .principles-intro {
+    position: sticky;
+    top: 120px;
+    align-self: start;
+  }
+  .principles-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    border-top: 1px solid var(--divider);
+    border-left: 1px solid var(--divider);
+  }
+  .principles-list article {
+    padding: 1.6rem;
+    border-right: 1px solid var(--divider);
+    border-bottom: 1px solid var(--divider);
+  }
+  .principles-list h3 {
+    font-size: 1.2rem;
+  }
+  .principles-list p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.92rem;
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 0.45fr 1.55fr;
+    gap: 2rem;
+  }
+  .about-grid h2 {
+    max-width: 800px;
+  }
+  @media (max-width: 900px) {
+    .home-hero {
+      min-height: 0;
+    }
+    .hero-grid {
+      grid-template-columns: 1fr;
+    }
+    .strata {
+      min-height: 380px;
+    }
+    .principles-grid {
+      grid-template-columns: 1fr;
+    }
+    .principles-intro {
+      position: static;
+    }
+  }
+  @media (max-width: 580px) {
+    .strata {
+      min-height: 310px;
+    }
+    .strata img {
+      width: 45%;
+    }
+    .process-list li {
+      grid-template-columns: 48px 1fr;
+    }
+    .principles-list {
+      grid-template-columns: 1fr;
+    }
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+  }
+</style>

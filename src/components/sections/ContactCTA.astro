@@ -1,0 +1,76 @@
+---
+import siteConfig from '@/config/site.config';
+---
+
+<section class="contact-cta">
+  <div class="cta-grid container">
+    <div>
+      <p class="eyebrow">Hablemos del proyecto</p>
+      <h2>Una solución útil empieza por entender bien la necesidad.</h2>
+    </div>
+    <div class="cta-actions">
+      <p>
+        Facebook es el canal disponible actualmente. Podemos comenzar por conocer el contexto y los
+        objetivos del negocio.
+      </p>
+      <a
+        class="button button--primary"
+        href={siteConfig.facebook.url}
+        target="_blank"
+        rel="noopener noreferrer">Contactar por Facebook <span aria-hidden="true">↗</span></a
+      >
+      {
+        !siteConfig.whatsapp.enabled && (
+          <span class="soon" aria-disabled="true">
+            WhatsApp próximamente
+          </span>
+        )
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact-cta {
+    padding-block: clamp(4rem, 8vw, 7rem);
+    background: var(--surface-inverse);
+    color: var(--text-inverse);
+  }
+  .cta-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: end;
+    gap: clamp(2rem, 7vw, 6rem);
+  }
+  .contact-cta .eyebrow {
+    color: #82b4e5;
+  }
+  .contact-cta h2 {
+    margin: 0;
+    color: var(--text-inverse);
+  }
+  .cta-actions p {
+    color: color-mix(in srgb, var(--text-inverse) 76%, transparent);
+  }
+  .cta-actions .button {
+    margin-top: 0.5rem;
+    background: #f3f7fa;
+    color: #14202b;
+  }
+  .cta-actions .button:hover {
+    background: #ffffff;
+    color: #14202b;
+  }
+  .soon {
+    display: block;
+    margin-top: 1rem;
+    color: color-mix(in srgb, var(--text-inverse) 62%, transparent);
+    font-size: 0.82rem;
+  }
+  @media (max-width: 760px) {
+    .cta-grid {
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+  }
+</style>

@@ -1,5 +1,5 @@
 dist/
 node_modules/
 .astro/
-public/pagefind/
+.vercel/
 pnpm-lock.yaml
